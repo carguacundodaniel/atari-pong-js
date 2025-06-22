@@ -1,26 +1,9 @@
 const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
 
-function draw() {
-  // Fondo negro
-  ctx.fillStyle = "black";
-  ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-  // Paddle
-  ctx.fillStyle = "white";
-  ctx.fillRect(10, 200, 10, 100);
-
-  // Pelota
-  ctx.beginPath();
-  ctx.arc(400, 250, 10, 0, Math.PI * 2);
-  ctx.fillStyle = "white";
-  ctx.fill();
-  ctx.closePath();
-}
-
-setInterval(draw, 1000 / 60);
-<<<<<<< HEAD
-=======
+let paddleY = 200;
+const paddleHeight = 100;
+const paddleSpeed = 5;
 
 let ballX = 400;
 let ballY = 250;
@@ -28,25 +11,30 @@ let ballSpeedX = 4;
 let ballSpeedY = 3;
 
 function draw() {
+  // Fondo negro
   ctx.fillStyle = "black";
   ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-  // Paddle fijo
+  // Paddle
   ctx.fillStyle = "white";
-  ctx.fillRect(10, 200, 10, 100);
+  ctx.fillRect(10, paddleY, 10, paddleHeight);
 
-  // Pelota en movimiento
+  // Pelota
   ctx.beginPath();
   ctx.arc(ballX, ballY, 10, 0, Math.PI * 2);
   ctx.fillStyle = "white";
   ctx.fill();
   ctx.closePath();
+}
 
-  // Movimiento
+function update() {
+  draw();
+
+  // Movimiento pelota
   ballX += ballSpeedX;
   ballY += ballSpeedY;
 
-  // Rebotes
+  // Rebotes pelota
   if (ballY + 10 > canvas.height || ballY - 10 < 0) {
     ballSpeedY *= -1;
   }
@@ -55,4 +43,13 @@ function draw() {
     ballSpeedX *= -1;
   }
 }
->>>>>>> ebb7f90 (feat: agregar movimiento automático de la pelota con rebotes)
+
+document.addEventListener("keydown", function(event) {
+  if (event.key === "ArrowUp" && paddleY > 0) {
+    paddleY -= paddleSpeed;
+  } else if (event.key === "ArrowDown" && paddleY < canvas.height - paddleHeight) {
+    paddleY += paddleSpeed;
+  }
+});
+
+setInterval(update, 1000 / 60);
