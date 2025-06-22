@@ -1,0 +1,199 @@
+Errores presentado en hacer un commit
+ 
+Desarrolando y saber el uso de la aplicación Git Bash pude lograr los commit 
+ 
+
+ 
+
+Petición a la IA
+Perfecto. Vamos a implementar el juego más básico de Atari: Pong, usando solo HTML, CSS y JavaScript puro (vanilla JS). A continuación te explico los pasos y te proporciono los archivos para que comiences el proyecto desde cero y puedas hacer tus commits y pushes progresivos a GitHub
+Juego: Atari Pong Clásico (versión simple 1 jugador)
+Perfecto. Aquí tienes el contenido del archivo .txt con la explicación formal sobre el uso de variables temporales en tu juego, tal como podrías entregarlo:
+explicacion_variables_temporales.txt
+PREGUNTAS: Usa estos pasos desde tu computador para subir archivos correctamente con mensajes personalizados:
+
+PREGUNTAS: Paso a paso para hacer commits y push desde tu carpeta local
+1.	Abre tu terminal (Git Bash o CMD).
+2.	Navega a tu carpeta del proyecto, por ejemplo:
+bash
+CopiarEditar
+cd "/c/Users/dcarguava/Desktop/Juego Pong"
+(Ajusta la ruta según dónde esté tu carpeta.)
+________________________________________
+3.	Verifica el estado de git:
+bash
+CopiarEditar
+git status
+Esto te mostrará si hay archivos modificados o sin stage.
+________________________________________
+4.	Agrega todos los archivos al stage:
+bash
+CopiarEditar
+git add .
+5.	Haz el commit con un mensaje descriptivo, por ejemplo (para el primer commit):
+bash
+CopiarEditar
+git commit -m "feat: estructura base del proyecto con HTML, CSS y JS"
+6.	Envía los cambios a GitHub:
+bash
+CopiarEditar
+git push origin main
+________________________________________
+Repite estos pasos (agregar, commitear, push) para cada avance que hagas.
+Cómo navegar y hacer commits desde Git Bash (o CMD con Git)
+
+
+
+
+
+¡Genial! Aquí tienes un script en bash (push_pong.sh) con todos los comandos listos para ejecutar paso a paso los commits y push de tu proyecto Pong.
+Archivo: push_pong.sh
+bash
+CopiarEditar
+#!/bin/bash
+
+cd "/c/Users/dcarguava/Desktop/Juego Pong"
+
+echo "Commit 1: estructura base"
+git add index.html style.css script.js
+git commit -m "feat: estructura base del proyecto con HTML, CSS y JS"
+git push origin main
+
+echo "Commit 2: paddle y pelota estáticos"
+git add script.js
+git commit -m "feat: dibujar paddle y pelota estáticos en canvas"
+git push origin main
+
+echo "Commit 3: movimiento automático y rebotes"
+git add script.js
+git commit -m "feat: agregar movimiento automático y rebotes de la pelota"
+git push origin main
+
+echo "Commit 4: control paddle con mouse"
+git add script.js
+git commit -m "feat: controlar paddle con movimiento del mouse"
+git push origin main
+
+echo "Commit 5: colisión paddle y puntaje"
+git add script.js
+git commit -m "feat: detección colisión con paddle y puntaje en variable temporal"
+git push origin main
+
+echo "Commit 6: reinicio al fallar"
+git add script.js
+git commit -m "feat: reiniciar pelota y puntaje cuando se falla"
+git push origin main
+
+echo "Commit 7: agregar README"
+git add README.md
+git commit -m "docs: agregar README con descripción del proyecto"
+git push origin main
+
+echo "Commit 8: explicación variables temporales"
+git add explicacion_variables_temporales.txt
+git commit -m "docs: explicación uso variables temporales en JS para puntaje"
+git push origin main
+
+echo "Todos los commits realizados y enviados."
+
+
+
+
+
+Commit 8: explicación variables temporales fatal: pathspec 'explicacion_variables_temporales.txt' did not match any files On branch main Untracked files: (use "git add <file>..." to include in what will be committed) push_pong.sh nothing added to commit but untracked files present (use "git add" to track) To https://github.com/carguacundodaniel/atari-pong-js.git ! [rejected] main -> main (fetch first) error: failed to push some refs to 'https://github.com/carguacundodaniel/atari-p ong-js.git' hint: Updates were rejected because the remote contains work that you do not hint: have locally. This is usually caused by another repository pushing to hint: the same ref. If you want to integrate the remote changes, use hint: 'git pull' before pushing again. hint: See the 'Note about fast-forwards' in 'git push --help' for details. Todos los commits realizados y enviados. por que me sale este error
+SOLUCIONES
+Análisis del error
+1.	Error:
+python
+CopiarEditar
+fatal: pathspec 'explicacion_variables_temporales.txt' did not match any files
+Significa que intentaste hacer commit de un archivo llamado explicacion_variables_temporales.txt que no existe o no fue agregado al área de stage.
+2.	Archivos no rastreados:
+makefile
+CopiarEditar
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+        push_pong.sh
+Esto indica que tienes archivos nuevos sin agregar (como push_pong.sh).
+3.	Error al hacer push:
+vbnet
+CopiarEditar
+error: failed to push some refs to 'https://github.com/carguacundodaniel/atari-pong-js.git'
+hint: Updates were rejected because the remote contains work that you do not
+hint: have locally. This is usually caused by another repository pushing to
+hint: the same ref. If you want to integrate the remote changes, use
+hint: 'git pull' before pushing again.
+Esto indica que tu repositorio remoto tiene commits que no están en tu copia local, por eso Git no deja subir los cambios para evitar perder trabajo.
+________________________________________
+Solución paso a paso
+Paso 1: Crear y agregar el archivo faltante
+Si no tienes el archivo explicacion_variables_temporales.txt, créalo con este contenido:
+perl
+CopiarEditar
+El puntaje se mantiene en una variable temporal en JavaScript durante la ejecución, sin almacenamiento persistente.
+
+Esto cumple con la consigna de que no hay registros, solo variables temporales en frontend.
+Guárdalo en la carpeta raíz del proyecto.
+Luego agrega el archivo:
+bash
+CopiarEditar
+git add explicacion_variables_temporales.txt
+________________________________________
+Paso 2: Traer los cambios remotos antes de subir
+Para evitar conflictos, haz un pull primero (esto fusionará o actualizará tu repo local):
+bash
+CopiarEditar
+git pull origin main --rebase
+Nota: el flag --rebase hace que tus commits locales se apliquen encima de los cambios remotos, manteniendo un historial limpio.
+Si surge algún conflicto, Git te lo indicará, y tendrás que resolverlo editando los archivos conflictivos, luego:
+bash
+CopiarEditar
+git add <archivo en conflicto>
+git rebase --continue
+________________________________________
+Paso 3: Hacer commit (si no lo hiciste ya)
+bash
+CopiarEditar
+git commit -m "docs: explicación uso variables temporales en JS para puntaje"
+Si ya hiciste commit, este paso no es necesario.
+________________________________________
+Paso 4: Subir tus cambios
+bash
+CopiarEditar
+git push origin main
+________________________________________
+Resumen rápido de comandos útiles:
+bash
+CopiarEditar
+# 1. Asegúrate de tener el archivo
+touch explicacion_variables_temporales.txt
+# (agrega el contenido con cualquier editor)
+
+# 2. Añade el archivo
+git add explicacion_variables_temporales.txt
+
+# 3. Trae cambios remotos para evitar conflictos
+git pull origin main --rebase
+
+# 4. Haz commit (si no lo hiciste ya)
+git commit -m "docs: explicación uso variables temporales en JS para puntaje"
+
+# 5. Sube los cambios
+git push origin main
+404 No hay un sitio de GitHub Pages aquí. Si estás intentando publicar uno, lee la documentación completa para aprender a configurar GitHub Pages para tu repositorio, organización o cuenta de usuario
+ERA POR QUE NO TENIA HABILITADO LA OPCION
+ 
+
+Pasos para crear y subir el README.md
+1.	Crear el archivo README.md
+En tu carpeta del proyecto crea un archivo llamado README.md con el contenido que te di.
+Si estás en Git Bash o terminal, puedes hacer esto rápido con:
+bash
+CopiarEditar
+cat > README.md << EOF
+# Atari Pong Básico en HTML, CSS y JavaScript
+
+ 
+
+ 
+
