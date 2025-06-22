@@ -10,6 +10,8 @@ let ballY = 250;
 let ballSpeedX = 4;
 let ballSpeedY = 3;
 
+let score = 0; // variable temporal para puntaje
+
 function draw() {
   // Fondo negro
   ctx.fillStyle = "black";
@@ -25,6 +27,11 @@ function draw() {
   ctx.fillStyle = "white";
   ctx.fill();
   ctx.closePath();
+
+  // Puntaje
+  ctx.fillStyle = "white";
+  ctx.font = "20px Arial";
+  ctx.fillText("Puntaje: " + score, 10, 30);
 }
 
 function update() {
@@ -34,12 +41,23 @@ function update() {
   ballX += ballSpeedX;
   ballY += ballSpeedY;
 
-  // Rebotes pelota
+  // Rebotes pelota en paredes superior e inferior
   if (ballY + 10 > canvas.height || ballY - 10 < 0) {
     ballSpeedY *= -1;
   }
 
-  if (ballX + 10 > canvas.width || ballX - 10 < 0) {
+  // Rebote pelota en paddle
+  if (
+    ballX - 10 <= 20 && // cerca del paddle horizontalmente
+    ballY >= paddleY &&
+    ballY <= paddleY + paddleHeight
+  ) {
+    ballSpeedX *= -1;
+    score++; // aumenta puntaje
+  }
+
+  // Rebote pelota en pared derecha
+  if (ballX + 10 > canvas.width) {
     ballSpeedX *= -1;
   }
 }
