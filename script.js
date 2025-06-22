@@ -10,10 +10,10 @@ let ballY = 250;
 let ballSpeedX = 4;
 let ballSpeedY = 3;
 
-let score = 0; // variable temporal para puntaje
+let score = 0;
+let gameOver = false;
 
 function draw() {
-  // Fondo negro
   ctx.fillStyle = "black";
   ctx.fillRect(0, 0, canvas.width, canvas.height);
 
@@ -32,37 +32,62 @@ function draw() {
   ctx.fillStyle = "white";
   ctx.font = "20px Arial";
   ctx.fillText("Puntaje: " + score, 10, 30);
+
+  // Mensaje game over
+  if (gameOver) {
+    ctx.font = "40px Arial";
+    ctx.fillStyle = "red";
+    ctx.fillText("¡Game Over!", canvas.width / 2 - 100, canvas.height / 2);
+  }
+}
+
+function resetBall() {
+  ballX = canvas.width / 2;
+  ballY = canvas.height / 2;
+  // Cambiar dirección inicial al azar
+  ballSpeedX = 4 * (Math.random() > 0.5 ? 1 : -1);
+  ballSpeedY = 3 * (Math.random() > 0.5 ? 1 : -1);
 }
 
 function update() {
+  if (gameOver) return; // Detener juego si terminó
+
   draw();
 
-  // Movimiento pelota
   ballX += ballSpeedX;
   ballY += ballSpeedY;
 
-  // Rebotes pelota en paredes superior e inferior
   if (ballY + 10 > canvas.height || ballY - 10 < 0) {
     ballSpeedY *= -1;
   }
 
   // Rebote pelota en paddle
   if (
-    ballX - 10 <= 20 && // cerca del paddle horizontalmente
+    ballX - 10 <= 20 &&
     ballY >= paddleY &&
     ballY <= paddleY + paddleHeight
   ) {
     ballSpeedX *= -1;
-    score++; // aumenta puntaje
+    score++;
   }
 
-  // Rebote pelota en pared derecha
+  // Si la pelota pasa el paddle: game over
+  if (ballX - 10 < 0) {
+    gameOver = true;
+  }
+
   if (ballX + 10 > canvas.width) {
     ballSpeedX *= -1;
   }
 }
 
 document.addEventListener("keydown", function(event) {
+  if (gameOver && event.key === "Enter") {
+    // Reiniciar juego al presionar Enter
+    score = 0;
+    gameOver = false;
+    resetBall();
+  }
   if (event.key === "ArrowUp" && paddleY > 0) {
     paddleY -= paddleSpeed;
   } else if (event.key === "ArrowDown" && paddleY < canvas.height - paddleHeight) {
@@ -70,4 +95,5 @@ document.addEventListener("keydown", function(event) {
   }
 });
 
+resetBall();
 setInterval(update, 1000 / 60);
