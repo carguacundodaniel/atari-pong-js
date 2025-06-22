@@ -1,0 +1,3 @@
+El puntaje se mantiene en una variable temporal en JavaScript durante la ejecución, sin almacenamiento persistente.
+
+Esto cumple con la consigna de que no hay registros, solo variables temporales en frontend.
